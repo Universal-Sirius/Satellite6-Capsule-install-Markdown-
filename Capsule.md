@@ -65,45 +65,48 @@ firewall-cmd \
   --add-port="8000/tcp" --add-port="9090/tcp"
 ```
 
-firewall-cmd --runtime-to-permanent
-
-firewall-cmd --list-all
-
-ping -c1 localhost
-ping -c1 `hostname -f` # Replace with your system's domain
-hostnamectl set-hostname your_hostname
+```firewall-cmd --runtime-to-permanent ```
+```firewall-cmd --list-all ```
 
 
-subscription-manager repos --disable "*"
-subscription-manager repos \
-  --enable=rhel-8-for-x86_64-baseos-rpms \
-  --enable=rhel-8-for-x86_64-appstream-rpms \
-  --enable=satellite-capsule-6.14-for-rhel-8-x86_64-rpms \
-  --enable=satellite-maintenance-6.14-for-rhel-8-x86_64-rpms
+```ping -c1 localhost ```
+```ping -c1 `hostname -f``` # Replace with your system's domain
+```hostnamectl set-hostname your_hostname ```
 
+```subscription-manager repos --disable "*" ```
 
-dnf module enable satellite-capsule:el8
+```subscription-manager repos \
+   --enable=rhel-8-for-x86_64-baseos-rpms \
+   --enable=rhel-8-for-x86_64-appstream-rpms \
+   --enable=satellite-capsule-6.14-for-rhel-8-x86_64-rpms \
+   --enable=satellite-maintenance-6.14-for-rhel-8-x86_64-rpms
+```
 
+```dnf module enable satellite-capsule:el8```
 
-dnf update
-dnf install satellite-capsule
+```dnf update```
+```dnf install satellite-capsule```
 
-
-dnf install chrony
-systemctl enable --now chronyd
+```dnf install chrony```
+```systemctl enable --now chronyd```
 
 
 # On Satellite Server
-mkdir /root/capsule_cert
+
+```mkdir /root/capsule_cert
 capsule-certs-generate \
   --foreman-proxy-fqdn "your_capsule_fqdn" \
   --certs-tar "/root/capsule_cert/your_capsule_fqdn-certs.tar"
+```
+
+![My Image](image.jpg "This is my image")
 
 
 
 # Copy and deploy on Capsule Server
-scp /root/capsule_cert/your_capsule_fqdn-certs.tar \
+```scp /root/capsule_cert/your_capsule_fqdn-certs.tar \
   root@your_capsule_fqdn:/root/
+```
 
 
 ## Part II B: DMZ Location Configuration
