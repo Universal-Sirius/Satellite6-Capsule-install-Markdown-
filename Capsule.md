@@ -65,6 +65,7 @@ firewall-cmd \
   --add-port="8140/tcp" \
   --add-port="8443/tcp" \
   --add-port="8000/tcp" --add-port="9090/tcp"
+
 firewall-cmd --runtime-to-permanent
 
 firewall-cmd --list-all
@@ -81,8 +82,9 @@ subscription-manager repos \
   --enable=rhel-8-for-x86_64-appstream-rpms \
   --enable=satellite-capsule-6.14-for-rhel-8-x86_64-rpms \
   --enable=satellite-maintenance-6.14-for-rhel-8-x86_64-rpms
-dnf module enable satellite-capsule:el8
 
+
+dnf module enable satellite-capsule:el8
 
 
 dnf update
@@ -98,6 +100,10 @@ mkdir /root/capsule_cert
 capsule-certs-generate \
   --foreman-proxy-fqdn "your_capsule_fqdn" \
   --certs-tar "/root/capsule_cert/your_capsule_fqdn-certs.tar"
+
+capsule-cers-generate \
+--foreman-proxy-fqdn cuars2ap.cag.conagrafoods.net
+--certs-tar /root/capsule_cert/cuars2ap.cag.conagrafoods.net
 
 # Copy and deploy on Capsule Server
 scp /root/capsule_cert/your_capsule_fqdn-certs.tar \
