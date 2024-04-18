@@ -99,7 +99,7 @@ capsule-certs-generate \
   --certs-tar "/root/capsule_cert/your_capsule_fqdn-certs.tar"
 ```
 
-![My Image](image.jpg "This is my image")
+![My Image](ssl example.png "This is my image")
 
 
 
