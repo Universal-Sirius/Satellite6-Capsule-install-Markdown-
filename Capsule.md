@@ -50,12 +50,10 @@
 
 On the Satellite Server, open the port for Capsule to Satellite communication:
 
+```firewall-cmd --add-port="5646/tcp"``` 
+ ```firewall-cmd --runtime-to-permanent```
 
-firewall-cmd --add-port="5646/tcp"
-firewall-cmd --runtime-to-permanent
-
-
-sudo yum install firewalld
+```sudo yum install firewalld 
 firewall-cmd \
   --add-port="53/udp" --add-port="53/tcp" \
   --add-port="67/udp" \
@@ -65,11 +63,11 @@ firewall-cmd \
   --add-port="8140/tcp" \
   --add-port="8443/tcp" \
   --add-port="8000/tcp" --add-port="9090/tcp"
+```
 
 firewall-cmd --runtime-to-permanent
 
 firewall-cmd --list-all
-
 
 ping -c1 localhost
 ping -c1 `hostname -f` # Replace with your system's domain
