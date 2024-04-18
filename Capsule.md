@@ -43,14 +43,14 @@
 - Satellite Utils 6.14 RHEL
   
 3. Create a new Content View (CV) for Capsule. ```rhel8-capsule```
-4. 4. Use Activation Keys.  ```act-rhel8.9-capsule```
+4. Use Activation Keys.  ```act-rhel8.9-capsule```
 ## Part III: Enabling Connections
 
 ### From Capsule Server to Satellite Server
 
 On the Satellite Server, open the port for Capsule to Satellite communication:
 
-```bash
+
 firewall-cmd --add-port="5646/tcp"
 firewall-cmd --runtime-to-permanent
 
@@ -152,7 +152,7 @@ scp /root/capsule_cert/your_capsule_fqdn-certs.tar \
 - This is necessary for Satellite to recognize hosts' IP addresses forwarded over the X-Forwarded-For HTTP header set by Capsule.
 - For security, Satellite recognizes this header only from localhost by default.
 
-```bash
+
 satellite-installer \
 --foreman-trusted-proxies "127.0.0.1/8" \
 --foreman-trusted-proxies "::1" \
@@ -164,3 +164,34 @@ satellite-installer \
 --foreman-proxy-trusted-hosts "10.0.0.57.nip.io" \
 --foreman-proxy-oauth-consumer-key "CfFDCwDjATNw3YS79rfNxXd5wLr8cqbb" \
 --foreman-proxy-oauth-consumer-secret "UzdHRJiMbgE3z7cdWeer3XxX5uVE6fqV"
+
+
+### Verification of Trusted Proxies
+To list the current trusted proxies, use the full help command in the Satellite installer:
+
+
+satellite-installer --full-help | grep -A 2 "trusted-proxies"
+
+## Updating Configuration in the Satellite Web UI
+
+### Refresh Capsule Server Configuration
+- **Navigate to Infrastructure > Capsules**, locate the Capsule Server, and from the list in the Actions column, select **Refresh**.
+
+### Configure the Domain
+- **Go to Infrastructure > Domains** and ensure the DNS Capsule is set to the Capsule connected to the subnet.
+
+### Configure the Subnet
+- **Access Infrastructure > Subnets**.
+- In the Subnet tab, set IPAM to **None**.
+
+## Adding Lifecycle Environments to Capsule Servers
+
+### Procedure to Add Lifecycle Environments
+If your Capsule Server has the content functionality enabled, follow these steps to add environments:
+- **Navigate to Infrastructure > Capsules**, select the Capsule, and click **Edit**.
+- In the **Lifecycle Environments tab**, select the environments you want to add and click **Submit**.
+
+### Synchronize Content on the Capsule
+- Click the **Overview tab** in the Capsule settings.
+- Click **Synchronize** to start the synchronization process.
+- Choose between **Optimized Sync** or **Complete Sync** as your synchronization type.
