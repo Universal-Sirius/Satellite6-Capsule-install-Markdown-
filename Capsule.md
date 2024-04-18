@@ -101,9 +101,7 @@ capsule-certs-generate \
   --foreman-proxy-fqdn "your_capsule_fqdn" \
   --certs-tar "/root/capsule_cert/your_capsule_fqdn-certs.tar"
 
-capsule-cers-generate \
---foreman-proxy-fqdn cuars2ap.cag.conagrafoods.net
---certs-tar /root/capsule_cert/cuars2ap.cag.conagrafoods.net
+
 
 # Copy and deploy on Capsule Server
 scp /root/capsule_cert/your_capsule_fqdn-certs.tar \
