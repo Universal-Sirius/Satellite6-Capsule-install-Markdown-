@@ -1,0 +1,98 @@
+# Satellite Capsule Setup Guide
+
+## Part I: Preparation
+
+### System Requirements
+- **CPU**
+- **Memory**
+- **Disk Space**
+
+## Part II: Network Setup
+
+### Properly Configured Network Settings
+- Ensure DNS and DHCP settings are correctly configured.
+- Consider slow internet speeds and large software repositories when setting up.
+
+## Installation
+
+- Installation time can range from **1 to 5 hours**.
+- Configure the Capsule server to communicate with the Satellite server, including content mirroring, DHCP, DNS, and TFTP.
+
+## Steps
+
+### Synchronization
+- This can be the most time-consuming part, especially with slow internet or substantial content.
+- Note: This could take several hours or a full day.
+
+### Testing and Troubleshooting
+- Verification: Test the setup to ensure everything is working as expected.
+- Resolve any issues that might arise during deployment, such as configuration errors or network issues.
+
+### Estimated Time Range
+- **Fast Deployment:** 1 to 5 hours.
+- **Typical Deployment:** 6 to 12 hours.
+- **Extended Deployment:** A day or more.
+
+#### Notes:
+1. Check if ports are enabled.
+2. Pull Repos from Red Hat for Capsule Sync.
+3. Create a new Content View (CV) for Capsule.
+4. Use Activation Keys.
+
+## Part III: Enabling Connections
+
+### From Capsule Server to Satellite Server
+
+On the Satellite Server, open the port for Capsule to Satellite communication:
+
+```bash
+firewall-cmd --add-port="5646/tcp"
+firewall-cmd --runtime-to-permanent
+
+sudo yum install firewalld
+firewall-cmd \
+  --add-port="53/udp" --add-port="53/tcp" \
+  --add-port="67/udp" \
+  --add-port="69/udp" \
+  --add-port="443/tcp" \
+  --add-port="5647/tcp" \
+  --add-port="8140/tcp" \
+  --add-port="8443/tcp" \
+  --add-port="8000/tcp" --add-port="9090/tcp"
+firewall-cmd --runtime-to-permanent
+
+firewall-cmd --list-all
+
+ping -c1 localhost
+ping -c1 `hostname -f` # Replace with your system's domain
+hostnamectl set-hostname your_hostname
+
+subscription-manager repos --disable "*"
+subscription-manager repos \
+  --enable=rhel-8-for-x86_64-baseos-rpms \
+  --enable=rhel-8-for-x86_64-appstream-rpms \
+  --enable=satellite-capsule-6.14-for-rhel-8-x86_64-rpms \
+  --enable=satellite-maintenance-6.14-for-rhel-8-x86_64-rpms
+dnf module enable satellite-capsule:el8
+
+
+dnf update
+dnf install satellite-capsule
+
+dnf install chrony
+systemctl enable --now chronyd
+
+
+# On Satellite Server
+mkdir /root/capsule_cert
+capsule-certs-generate \
+  --foreman-proxy-fqdn "your_capsule_fqdn" \
+  --certs-tar "/root/capsule_cert/your_capsule_fqdn-certs.tar"
+
+# Copy and deploy on Capsule Server
+scp /root/capsule_cert/your_capsule_fqdn-certs.tar \
+  root@your_capsule_fqdn:/root/
+
+
+
+This Markdown guide is structured to be clear and easy to follow, enhancing the readability and usability of the information for system administrators setting up a Capsule server.
