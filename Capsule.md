@@ -171,7 +171,7 @@ satellite-installer \
 To list the current trusted proxies, use the full help command in the Satellite installer:
 
 
-satellite-installer --full-help | grep -A 2 "trusted-proxies"
+```satellite-installer --full-help | grep -A 2 "trusted-proxies"```
 
 ## Updating Configuration in the Satellite Web UI
 
