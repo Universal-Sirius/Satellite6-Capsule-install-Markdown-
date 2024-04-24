@@ -153,7 +153,7 @@ capsule-certs-generate \
 - This is necessary for Satellite to recognize hosts' IP addresses forwarded over the X-Forwarded-For HTTP header set by Capsule.
 - For security, Satellite recognizes this header only from localhost by default.
 
-
+```
 satellite-installer \
 --foreman-trusted-proxies "127.0.0.1/8" \
 --foreman-trusted-proxies "::1" \
@@ -165,7 +165,7 @@ satellite-installer \
 --foreman-proxy-trusted-hosts "10.0.0.57.nip.io" \
 --foreman-proxy-oauth-consumer-key "CfFDCwDjATNw3YS79rfNxXd5wLr8cqbb" \
 --foreman-proxy-oauth-consumer-secret "UzdHRJiMbgE3z7cdWeer3XxX5uVE6fqV"
-
+```
 
 ### Verification of Trusted Proxies
 To list the current trusted proxies, use the full help command in the Satellite installer:
