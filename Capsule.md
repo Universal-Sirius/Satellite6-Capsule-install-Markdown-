@@ -44,7 +44,7 @@
   
 3. Create a new Content View (CV) for Capsule. ```rhel8-capsule```
 4. Use Activation Keys.  ```act-rhel8.9-capsule```
-## Part III: Enabling Connections
+## Part I: Enabling Connections
 
 ### From Capsule Server to Satellite Server
 
